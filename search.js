@@ -75,31 +75,6 @@ var SearchPage = React.createClass({
     };
   },
 
-  _handleResponse(response) {
-
-  },
-
-  _executeQuery(query) {
-    fetch(query)
-    .then((response) => response.json())
-    .then((responseData) => {
-        this.setState({
-            securities: responseData.result.data,
-        });
-    })
-    .done();
-//    this.setState({ isLoading: true, message: '' });
-//    fetch(query)
-//      .then(response => response.json())
-//      .then(json => this._handleResponse(json.response))
-//      .catch(error => {
-//        this.setState({
-//          isLoading: false,
-//          message: 'Something bad happened ' + error
-//        });
-//      });
-  },
-
   customAction: function(event) {
     switch (event.action) {
       case 'option':
@@ -123,12 +98,8 @@ var SearchPage = React.createClass({
                 <SearchTextInput ref="input" customAction={this.customAction} />
              </View>
              <View style={styles.searchResult}>
-                       <SearchResult
-                         ref="search"
-                         goToUser={this.goToUser}
-                         goToRepo={this.goToRepo}
-                       />
-              </View>
+                  <SearchResult ref="search"/>
+             </View>
          </View>
     );
   },
