@@ -9,10 +9,16 @@ var {
    TextInput,
    StyleSheet,
    ViewPagerAndroid,
+   ListView,
+   TouchableOpacity,
+   TouchableHighlight,
+   Navigator,
    BackAndroid,
+   Alert,
 } = ReactNative;
 
 
+var SearchResult = require('./SearchResult');
 
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -28,119 +34,130 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
 var _navigator ;
 
 
+var SearchTextInput = React.createClass({
+  getInitialState: function() {
+    return {
+      currentSearchType: 'Repo',
+    };
+  },
+  handleSubmit: function(event) {
+    this.props.customAction({action:'submit', data: event.nativeEvent.text});
+  },
+  resignResponder: function() {
+    this.refs.input.blur();
+  },
+  render: function() {
+    var placeholder = `Search ${this.state.currentSearchType}`;
+    return (
+      <TextInput
+        ref="input"
+        style={styles.input}
+        autoCapitalize="none"
+        autoFocus={true}
+        autoCorrect={false}
+        returnKeyType={'search'}
+        placeholder={placeholder}
+        onSubmitEditing={this.handleSubmit}
+        onChangeText={(text) => this.setState({input: text})}
+      />
+    );
+  },
+});
+
 var SearchPage = React.createClass({
 
   getInitialState: function(){
     _navigator = this.props.navigator;
     return {
-
+        securityname:"",
+        securities:null,
     };
   },
 
- onSearchPressed() {
-    console.log('_onPressAdd', this.state.searchString);
-    var query = urlForQueryAndPage('place_name', this.state.searchString, 1);
-    this._executeQuery(query);
+  _handleResponse(response) {
+
   },
-  onLocationPressed() {
-      navigator.geolocation.getCurrentPosition(
-        location => {
-          var search = location.coords.latitude + ',' + location.coords.longitude;
-          this.setState({ searchString: search });
-          var query = urlForQueryAndPage('centre_point', search, 1);
-          this._executeQuery(query);
-        },
-        error => {
-          this.setState({
-            message: 'There was a problem with obtaining your locaton: ' + error
-          });
+
+  _executeQuery(query) {
+    fetch(query)
+    .then((response) => response.json())
+    .then((responseData) => {
+        this.setState({
+            securities: responseData.result.data,
         });
-    },
-
-  onSearchTextChanged(event) {
-      //this.setState({ searchString: event.nativeEvent.text });
-
-
+    })
+    .done();
+//    this.setState({ isLoading: true, message: '' });
+//    fetch(query)
+//      .then(response => response.json())
+//      .then(json => this._handleResponse(json.response))
+//      .catch(error => {
+//        this.setState({
+//          isLoading: false,
+//          message: 'Something bad happened ' + error
+//        });
+//      });
   },
 
+  customAction: function(event) {
+    switch (event.action) {
+      case 'option':
+        this.showActionSheet();
+        break;
+      case 'submit':
+        var query = event.data;
+        var url = `https://mobstg.morningstar.com/service_p2/1.0/products/MCS/securities/search/${query}`;
+        this.refs.search.doSearch(query, "");
+        //\\this._executeQuery(url);
+        //this.refs.search.doSearch(query, this.state.currentSearchType);
+        break;
+      case 'search':
+        var query = this.refs.input.state.input;
+ //     this.refs.search.doSearch(query, this.state.currentSearchType);
+        this.refs.input.resignResponder();
+        break;
+    }
+  },
 
   render: function(){
     return (
-// <SearchBar
-//        placeholder='Search'
-//        textFieldBackgroundColor='blue'
-//        />
-        <View style={styles.container}>
-
-            <View style={styles.flowRight}>
-              <TextInput
-                style={styles.searchInput}
-                placeholder='Input Security Name'
-                value={this.state.searchString}
-                onPress={this.onSearchPressed.bind(this)}
-                //onChange={this.onSearchTextChanged.bind(null,this)}
-
-                />
-
-            </View>
-
-
-          </View>
-
+         <View style={styles.container}>
+             <View>
+                <SearchTextInput ref="input" customAction={this.customAction} />
+             </View>
+             <View style={styles.searchResult}>
+                       <SearchResult
+                         ref="search"
+                         goToUser={this.goToUser}
+                         goToRepo={this.goToRepo}
+                       />
+              </View>
+         </View>
     );
   },
 });
 
 
 var styles = StyleSheet.create({
-  description: {
-    marginBottom: 20,
-    fontSize: 18,
-    textAlign: 'center',
-    color: '#656565'
-  },
   container: {
-    padding: 30,
-    marginTop: 65,
-    alignItems: 'center'
-  },
-  flowRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'stretch'
-  },
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    alignSelf: 'center'
-  },
-  button: {
-    height: 36,
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-  },
-  searchInput: {
-    height: 36,
-    padding: 4,
-    marginRight: 5,
-    flex: 4,
-    fontSize: 18,
-    borderWidth: 1,
-    borderColor: '#48BBEC',
-    borderRadius: 8,
-    color: '#48BBEC'
-  },
-  image: {
-    width: 217,
-    height: 138
-  }
+      flex: 1
+    },
+    searchRow: {
+      backgroundColor: '#eeeeee',
+      paddingTop: 15,
+      paddingLeft: 10,
+      paddingRight: 10,
+      paddingBottom: 10,
+    },
+    searchTextInput: {
+      backgroundColor: 'white',
+      borderColor: '#cccccc',
+      borderRadius: 1,
+      borderWidth: 1,
+      height: 40,
+      paddingLeft: 8,
+    },
+
 });
 
 module.exports = SearchPage;
