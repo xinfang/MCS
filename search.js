@@ -14,7 +14,8 @@ var {
    TouchableHighlight,
    Navigator,
    BackAndroid,
-   Alert,
+   PixelRatio,
+   Platform,
 } = ReactNative;
 
 
@@ -106,14 +107,10 @@ var SearchPage = React.createClass({
         break;
       case 'submit':
         var query = event.data;
-        var url = `https://mobstg.morningstar.com/service_p2/1.0/products/MCS/securities/search/${query}`;
         this.refs.search.doSearch(query, "");
-        //\\this._executeQuery(url);
-        //this.refs.search.doSearch(query, this.state.currentSearchType);
         break;
       case 'search':
         var query = this.refs.input.state.input;
- //     this.refs.search.doSearch(query, this.state.currentSearchType);
         this.refs.input.resignResponder();
         break;
     }
@@ -137,27 +134,74 @@ var SearchPage = React.createClass({
   },
 });
 
-
 var styles = StyleSheet.create({
   container: {
-      flex: 1
-    },
-    searchRow: {
-      backgroundColor: '#eeeeee',
-      paddingTop: 15,
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingBottom: 10,
-    },
-    searchTextInput: {
-      backgroundColor: 'white',
-      borderColor: '#cccccc',
-      borderRadius: 1,
-      borderWidth: 1,
-      height: 40,
-      paddingLeft: 8,
-    },
-
+    flex: 1,
+    marginTop: Platform.OS === 'ios' ? 20 : 0,
+    flexDirection: 'column',
+    backgroundColor: 'white',
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  searchBar: {
+    flexDirection: 'row',
+  },
+  searchBarInput: {
+    flex: 4,
+    flexDirection: 'column',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1 / PixelRatio.get(),
+    backgroundColor: '#202020',
+    borderRadius: 4,
+    color: 'white',
+    paddingLeft: 10,
+  },
+  helpText: {
+    color: 'white',
+    fontSize: 12,
+    alignSelf: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  cancelButtonText: {
+    fontSize: 16,
+    color: '#3CABDA',
+    alignSelf: 'center'
+  },
+  cancelButton: {
+    flex: 1,
+    height: 40,
+    marginLeft: 4,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
+  suggestion: {
+    flex: 10,
+  },
 });
+
+// var styles = StyleSheet.create({
+//   container: {
+//       flex: 1
+//     },
+//     searchRow: {
+//       backgroundColor: '#eeeeee',
+//       paddingTop: 15,
+//       paddingLeft: 10,
+//       paddingRight: 10,
+//       paddingBottom: 10,
+//     },
+//     searchTextInput: {
+//       backgroundColor: 'white',
+//       borderColor: '#cccccc',
+//       borderRadius: 1,
+//       borderWidth: 1,
+//       height: 40,
+//       paddingLeft: 8,
+//     },
+//
+// });
 
 module.exports = SearchPage;

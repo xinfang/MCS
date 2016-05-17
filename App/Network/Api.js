@@ -12,10 +12,6 @@ var Api = {
   doRequest: function(url, callback) {
     fetch(url, {headers: myHeaders})
     .then((response) => response.json())
-    //  .then((responseData) => {
-    //     console.log(responseData.movies);
-    //     //Alert.alert(responseData.movies);
-    //   })
    .then(function(ret) {
      callback && callback(ret);
    })
@@ -27,8 +23,8 @@ var Api = {
   },
 
   getSearchSecurities: function(query, callback) {
-  //    var url = 'https://mobdev.morningstar.com/service_p2/1.0/products/MCS/securities/search/fb?no_token'
-    var url = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+      var url = 'https://mobdev.morningstar.com/service_p2/1.0/products/MCS/securities/search/' + query;
+
     return this.doRequest(url, callback);
   }
 };
