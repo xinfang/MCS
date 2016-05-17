@@ -7,11 +7,6 @@ var {
   StyleSheet,
   View,
   Text,
-  Image,
-  PixelRatio,
-  Platform,
-  TouchableHighlight,
-  TouchableOpacity,
 } = ReactNative;
 
 var Api = require('./App/Network/Api');
@@ -37,11 +32,17 @@ module.exports = React.createClass({
   },
 
   _renderRow: function(rowData) {
-    return (<View style={styles.row}>
-                <Text style={{fontSize:22}}>{rowData.Name}</Text>
-              <Text style={{color: '#666'}}>{rowData.ExchangeShortName}</Text>
-            </View> )
+    return (
+      <View style={styles.row}>
+          <View style={styles.cell}>
+            <Text style={styles.name}>{rowData.Name}</Text>
+          </View>
+          <View style={styles.cell}>
+            <Text style={styles.ticket}>{rowData.RegionAndTicker.split(':')[1]} | {rowData.Exchange} </Text>
+          </View>
+      </View> )
   },
+
   render: function() {
     return (
       <ListView style={styles.suggestion}
@@ -62,67 +63,29 @@ module.exports = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Platform.OS === 'ios' ? 20 : 0,
-    flexDirection: 'column',
-    backgroundColor: 'black',
-    paddingLeft: 15,
-    paddingRight: 15,
+  row: {
+    flexDirection: 'row',
+    overflow: 'hidden',
+    borderBottomWidth: 0.5,
+    borderColor: '#F1F1F1',
   },
-  searchBar: {
+  cell: {
+    flex: 1,
+    height: 35,
+  },
+  name: {
+    fontSize: 14,
+    textAlign: 'left',
+    margin: 10
+  },
+  ticket: {
+    fontSize: 14,
+    textAlign: 'right',
+    margin: 10
+  },
+  loadingView: {
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
   },
-  searchBarInput: {
-    flex: 4,
-    flexDirection: 'column',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1 / PixelRatio.get(),
-    backgroundColor: '#202020',
-    borderRadius: 4,
-    color: 'white',
-    paddingLeft: 10,
-  },
-  helpText: {
-    color: 'white',
-    fontSize: 12,
-    alignSelf: 'center',
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  cancelButtonText: {
-    fontSize: 16,
-    color: '#3CABDA',
-    alignSelf: 'center'
-  },
-  cancelButton: {
-    flex: 1,
-    height: 40,
-    marginLeft: 4,
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-  },
-  suggestion: {
-    flex: 10,
-  },
 });
-
-
-// var styles = StyleSheet.create({
-//   row: {
-//     flex: 1,
-//     paddingLeft: 20,
-//     paddingTop: 10,
-//     paddingBottom: 10,
-//     overflow: 'hidden',
-//     borderBottomWidth: 0.5,
-//     borderColor: '#F1F1F1',
-//   },
-//   loadingView: {
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     flexDirection: 'row',
-//   },
-// });

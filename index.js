@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/hanks-zyh
- */
-
 'use strict';
 
 var React = require('react');
@@ -18,15 +13,9 @@ var {
 } =  ReactNative;
 
 var _navigator;
-var HttpView = require('./http.js');
 var SearchPage = require('./search.js');
-//var ShopView = require('./shop.android.js');
-//var ViewPager = require('./viewpager.android.js');
-//var UserInfoView = require('./userinfo.js');
-//var NewsView = require('./news.js');
 
 var MCSAndroid = React.createClass({
-
   getInitialState: function(){
     return {};
   },
@@ -35,32 +24,25 @@ var MCSAndroid = React.createClass({
     return Navigator.SceneConfigs.FadeAndroid;
   },
 
-
   renderSceneAndroid: function(route, navigator){
     _navigator = navigator;
     if(route.id === 'main'){
       return (
-
-
          <View style={styles.flexContainer}>
-                   <View>
-                     <Text style={styles.header}>
-                       My Company Stock
-                     </Text>
-
-                     <Text style={styles.company}>
-                       Powered by Morningstar
-                     </Text>
-                     <TouchableOpacity onPress={ () => _navigator.push({title:'SearchPage',id:'search'}) }>
-                     <Text style={styles.search}>
-                       Search for security by ticket or name
-                     </Text>
-                     </TouchableOpacity>
-                   </View>
+             <View>
+               <Text style={styles.header}>
+                 My Company Stock
+               </Text>
+               <Text style={styles.company}>
+                 Powered by Morningstar
+               </Text>
+               <TouchableOpacity onPress={ () => _navigator.push({title:'SearchPage',id:'search'}) }>
+               <Text style={styles.search}>
+                 Search for security by ticket or name
+               </Text>
+               </TouchableOpacity>
+             </View>
          </View>
-
-
-
        );
     }
 
@@ -69,8 +51,8 @@ var MCSAndroid = React.createClass({
             <SearchPage navigator={navigator} route={route}/>
           );
      }
-
   },
+
   render: function(){
     var renderScene = this.renderSceneAndroid;
     var configureScence = this.configureScenceAndroid;
@@ -98,30 +80,28 @@ var styles = StyleSheet.create({
     marginBottom: 5,
   },
   flexContainer: {
-              // 容器需要添加direction才能变成让子元素flex
-             flex:1,
-             alignItems:'center',
-             justifyContent:'center'
+     flex:1,
+     alignItems:'center',
+     justifyContent:'center'
   },
   header: {
-             height: 40,
-             fontSize: 30,
-             textAlign: 'center',
-             color: '#000000'
+     height: 40,
+     fontSize: 30,
+     textAlign: 'center',
+     color: '#000000'
   },
   company: {
-            height: 30,
-            textAlign: 'center',
-            fontSize: 15,
+      height: 30,
+      textAlign: 'center',
+      fontSize: 15,
 
   },
   search: {
-            height: 30,
-            textAlign: 'center',
-            fontSize: 15,
-            color: '#bab5f1'
+      height: 30,
+      textAlign: 'center',
+      fontSize: 15,
+      color: '#bab5f1'
   },
-
   button:{
     height:56,
     margin:10,
@@ -129,7 +109,6 @@ var styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
   },
-
 });
 
 module.exports = MCSAndroid

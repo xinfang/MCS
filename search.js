@@ -18,7 +18,6 @@ var {
    Platform,
 } = ReactNative;
 
-
 var SearchResult = require('./SearchResult');
 
 BackAndroid.addEventListener('hardwareBackPress', function() {
@@ -34,88 +33,74 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
 
 var _navigator ;
 
-
-var SearchTextInput = React.createClass({
-  getInitialState: function() {
-    return {
-      currentSearchType: 'Repo',
-    };
-  },
-  handleSubmit: function(event) {
-    this.props.customAction({action:'submit', data: event.nativeEvent.text});
-  },
-  resignResponder: function() {
-    this.refs.input.blur();
-  },
-  render: function() {
-    var placeholder = `Search ${this.state.currentSearchType}`;
-    return (
-      <TextInput
-        ref="input"
-        style={styles.input}
-        autoCapitalize="none"
-        autoFocus={true}
-        autoCorrect={false}
-        returnKeyType={'search'}
-        placeholder={placeholder}
-        onSubmitEditing={this.handleSubmit}
-        onChangeText={(text) => this.setState({input: text})}
-      />
-    );
-  },
-});
-
 var SearchPage = React.createClass({
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     return {
-        securityname:"",
-        securities:null,
+        text: null,
     };
   },
-
-  customAction: function(event) {
-    switch (event.action) {
-      case 'option':
-        this.showActionSheet();
-        break;
-      case 'submit':
-        var query = event.data;
-        this.refs.search.doSearch(query, "");
-        break;
-      case 'search':
-        var query = this.refs.input.state.input;
-        this.refs.input.resignResponder();
-        break;
-    }
+  _onPressCancelButton() {
+    _navigator.pop();
   },
 
+  _onTyping: function(text: Object) {
+    this.setState({
+      text: text.text,
+    });
+    this.refs.search.doSearch(text.text, "");
+  },
   render: function(){
     return (
-         <View style={styles.container}>
-             <View>
-                <SearchTextInput ref="input" customAction={this.customAction} />
-             </View>
-             <View style={styles.searchResult}>
-                  <SearchResult ref="search"/>
-             </View>
-         </View>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <Text style={styles.helpText}>
+          </Text>
+          <View style={styles.searchBar}>
+            <TextInput
+              style={styles.searchBarInput}
+              autoCapitalize={'characters'}
+              autoFocus={true}
+              placeholder="symbol.."
+              placeholderTextColor="gray"
+              onChangeText={(text) => this._onTyping({text})}
+              value={this.state.text}
+            />
+            <TouchableHighlight style={styles.cancelButton}
+              underlayColor="black"
+              onPress={this._onPressCancelButton}>
+              <Text style={styles.cancelButtonText}>
+                Cancel
+              </Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+        <View style={styles.suggestion}>
+            <View style={styles.searchResult}>
+                   <SearchResult ref="search"/>
+              </View>
+        </View>
+      </View>
     );
   },
 });
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: Platform.OS === 'ios' ? 20 : 0,
+    marginTop: 0,
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+  row: {
+    marginTop: 0,
     flexDirection: 'column',
-    backgroundColor: 'white',
-    paddingLeft: 15,
-    paddingRight: 15,
+    backgroundColor: 'black',
+    paddingLeft: 0,
+    paddingRight: 0,
   },
   searchBar: {
     flexDirection: 'row',
+      backgroundColor: 'black',
   },
   searchBarInput: {
     flex: 4,
@@ -123,17 +108,17 @@ var styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1 / PixelRatio.get(),
-    backgroundColor: '#202020',
+    backgroundColor: 'white',
     borderRadius: 4,
-    color: 'white',
+    color: 'black',
     paddingLeft: 10,
   },
   helpText: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 1,
     alignSelf: 'center',
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 0,
+    marginBottom: 0,
   },
   cancelButtonText: {
     fontSize: 16,
@@ -152,27 +137,5 @@ var styles = StyleSheet.create({
     flex: 10,
   },
 });
-
-// var styles = StyleSheet.create({
-//   container: {
-//       flex: 1
-//     },
-//     searchRow: {
-//       backgroundColor: '#eeeeee',
-//       paddingTop: 15,
-//       paddingLeft: 10,
-//       paddingRight: 10,
-//       paddingBottom: 10,
-//     },
-//     searchTextInput: {
-//       backgroundColor: 'white',
-//       borderColor: '#cccccc',
-//       borderRadius: 1,
-//       borderWidth: 1,
-//       height: 40,
-//       paddingLeft: 8,
-//     },
-//
-// });
 
 module.exports = SearchPage;
