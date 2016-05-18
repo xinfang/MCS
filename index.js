@@ -13,7 +13,9 @@ var {
 } =  ReactNative;
 
 var _navigator;
+
 var SearchPage = require('./search.js');
+var SecurityView = require('./SecurityView.js');
 
 var MCSAndroid = React.createClass({
   getInitialState: function(){
@@ -46,11 +48,16 @@ var MCSAndroid = React.createClass({
        );
     }
 
-     if(route.id === 'search'){
-          return (
-            <SearchPage navigator={navigator} route={route}/>
-          );
+    if(route.id === 'search'){
+        return (
+          <SearchPage navigator={navigator} route={route}/>
+        );
      }
+     if(route.id === 'detail'){
+         return (
+           <SecurityView navigator={navigator} route={route}/>
+         );
+      }
   },
 
   render: function(){

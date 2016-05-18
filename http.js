@@ -31,13 +31,10 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
 
 var _navigator ;
 var HttpView = React.createClass({
-
-
   getInitialState: function(){
     _navigator = this.props.navigator;
     return {};
   },
-
   getByFetch : function(){
     fetch('https://m.baidu.com' )
     .then((response) => response.text())
@@ -50,6 +47,7 @@ var HttpView = React.createClass({
     }).done();
     console.warn('请求是异步的:'+new Date().getMilliseconds());
   },
+  
   getByXMLHttpRequest : function(){
     var request = new XMLHttpRequest();
     request.onreadystatechange = (e) => {

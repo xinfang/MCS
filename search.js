@@ -10,6 +10,7 @@ var {
    StyleSheet,
    ViewPagerAndroid,
    ListView,
+   ScrollView,
    TouchableOpacity,
    TouchableHighlight,
    Navigator,
@@ -19,7 +20,6 @@ var {
 } = ReactNative;
 
 var SearchResult = require('./SearchResult');
-
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
     return false;
@@ -75,11 +75,13 @@ var SearchPage = React.createClass({
             </TouchableHighlight>
           </View>
         </View>
+        <ScrollView>
         <View style={styles.suggestion}>
             <View style={styles.searchResult}>
-                   <SearchResult ref="search"/>
+                   <SearchResult navigator={_navigator}  ref="search" route="result"/>
               </View>
         </View>
+        </ScrollView>
       </View>
     );
   },
@@ -111,7 +113,8 @@ var styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 4,
     color: 'black',
-    paddingLeft: 10,
+    paddingLeft: 5,
+    marginLeft: 5,
   },
   helpText: {
     color: 'white',

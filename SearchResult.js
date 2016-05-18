@@ -3,16 +3,37 @@ var React = require('react');
 var ReactNative = require('react-native');
 
 var {
-  ListView,
-  StyleSheet,
+  Image,
   View,
   Text,
+  TextInput,
+  StyleSheet,
+  ViewPagerAndroid,
+  ListView,
+  TouchableOpacity,
+  TouchableHighlight,
+  Navigator,
+  BackAndroid,
 } = ReactNative;
 
 var Api = require('./App/Network/Api');
 
+BackAndroid.addEventListener('hardwareBackPress', function() {
+  if(_navigator == null){
+    return false;
+  }
+  if(_navigator.getCurrentRoutes().length === 1){
+    return false;
+  }
+  _navigator.pop();
+  return true;
+});
+
+var _navigator ;
+
 module.exports = React.createClass({
   getInitialState: function() {
+    _navigator = this.props.navigator;
     return {
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       loaded: false,
@@ -31,16 +52,24 @@ module.exports = React.createClass({
     });
   },
 
+
+  _onPressAdd: function(rowData) {
+    _navigator.push({title:'SecurityView',id:'detail',security:rowData});
+  },
   _renderRow: function(rowData) {
     return (
-      <View style={styles.row}>
-          <View style={styles.cell}>
-            <Text style={styles.name}>{rowData.Name}</Text>
-          </View>
-          <View style={styles.cell}>
-            <Text style={styles.ticket}>{rowData.RegionAndTicker.split(':')[1]} | {rowData.Exchange} </Text>
-          </View>
-      </View> )
+      <TouchableHighlight onPress={() => this._onPressAdd(rowData)} underlayColor="#dddddd">
+
+        <View style={styles.row}>
+            <View style={styles.cell}>
+              <Text style={styles.name}>{rowData.Name}</Text>
+            </View>
+            <View style={styles.cell}>
+              <Text style={styles.ticket}>{rowData.RegionAndTicker.split(':')[1]} | {rowData.Exchange} </Text>
+            </View>
+        </View>
+      </TouchableHighlight>
+      )
   },
 
   render: function() {
