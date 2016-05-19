@@ -3,19 +3,18 @@ var React = require('react');
 var ReactNative = require('react-native');
 
 var {
-  Image,
   View,
   Text,
+  Alert,
   TextInput,
   StyleSheet,
   ViewPagerAndroid,
   ListView,
-  TouchableOpacity,
   TouchableHighlight,
   Navigator,
   BackAndroid,
 } = ReactNative;
-
+var SimpleAlert = require('react-native-simpledialog-android');
 var Api = require('./App/Network/Api');
 
 BackAndroid.addEventListener('hardwareBackPress', function() {
@@ -39,12 +38,29 @@ module.exports = React.createClass({
       loaded: false,
     };
   },
+  _onPress(event) {
+      console.log(event);
+  },
+
   doSearch: function(query, option) {
     if(!query.trim()) {
       return;
     }
     var that = this;
     Api.getSearchSecurities(query, function(data) {
+      if (data == false) {
+        SimpleAlert.alert(
+          'Please read me!',
+          'Want a warning alert?', [
+            { type: SimpleAlert.POSITIVE_BUTTON, text: 'Yes', onPress: () => console.log('Cancel Pressed!'), style: 'cancel' },
+            { type: SimpleAlert.NEGATIVE_BUTTON, text: 'No',  onPress: () => console.log('Cancel Pressed!'), style: 'cancel'},
+            { type: SimpleAlert.NEUTRAL_BUTTON, text: 'Neutral', onPress: () => console.log('Cancel Pressed!'), style: 'cancel'},
+          ]
+        );
+
+        //Alert.alert("Error","Request failed! ");
+        return;
+      }
       that.setState({
           dataSource: that.state.dataSource.cloneWithRows(data),
           loaded: true,
@@ -52,10 +68,24 @@ module.exports = React.createClass({
     });
   },
 
+  _onPressSetSecurity: function(rowData) {
+     _navigator.push({title:'SecurityView',id:'detail',security:rowData});
+  },
 
   _onPressAdd: function(rowData) {
-    _navigator.push({title:'SecurityView',id:'detail',security:rowData});
+    this._onPressSetSecurity(rowData);
+    // var msg = 'Would you like to set ' + rowData.Name + ' as your company stock?'
+    // Alert.alert(
+    //     'Confirm',
+    //     msg,
+    //     [
+    //       {text: 'Cancel', onPress: () => console.log('Cancel Pressed!'), style: 'cancel'},
+    //       {text: 'OK', onPress: () => this._onPressSetSecurity(rowData)},
+    //     ]
+    // )
+
   },
+
   _renderRow: function(rowData) {
     return (
       <TouchableHighlight onPress={() => this._onPressAdd(rowData)} underlayColor="#dddddd">

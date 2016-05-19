@@ -3,6 +3,11 @@ package com.mcsandroid;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
+import com.burnweb.rnsimplealertdialog.RNSimpleAlertDialogPackage;
+import com.smixx.reactnativeicons.ReactNativeIcons;  // <--- import
+import java.util.Arrays; // <--- import this if you want to specify which fonts to load
+import com.smixx.reactnativeicons.IconFont; // <--- import this if you want to specify which fonts to load
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +39,9 @@ public class MainActivity extends ReactActivity {
     @Override
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
-            new MainReactPackage()
+            new MainReactPackage(),
+            new ReactNativeIcons(),
+            new RNSimpleAlertDialogPackage()
         );
     }
 }
