@@ -2,6 +2,7 @@
 // var React = require('react');
 // var ReactNative = require('react-native');
 import React, { Component } from 'react';
+import PageControlIOS from 'react-native-pagecontrol';
 import {
   Image,
   View,
@@ -9,6 +10,7 @@ import {
   Alert,
   TextInput,
   StyleSheet,
+  ScrollView,
   Navigator,
   BackAndroid,
 } from 'react-native'
@@ -42,13 +44,18 @@ class SecurityView extends React.Component {
       security:props.route.security,
       date:new Date(),
       securityData:[],
-      quote:[]
-    };
-    this.doSearch(props.route.security.PerformanceId,"");
-    this.getQuote(props.route.security.PerformanceId,"");
-  }
+      quote:[],
 
-  doSearch(query, option) {
+      currentPage: 0
+    };
+
+  }
+  componentDidMount() {
+    this.getSecurity(this.props.route.security.PerformanceId,"");
+    this.getQuote(this.props.route.security.PerformanceId,"");
+   }
+
+  getSecurity(query, option) {
     if(!query.trim()) {
       return;
     }
@@ -59,6 +66,9 @@ class SecurityView extends React.Component {
       });
     });
   }
+
+
+
   getQuote(query, option) {
     if(!query.trim()) {
       return;
@@ -73,15 +83,15 @@ class SecurityView extends React.Component {
 
 
   render() {
+
     return (
       <View style={styles.container}>
+
         <View style={styles.heading}>
             <View style={styles.ticketCell}>
               <Text style={styles.ticketText}>{this.state.security.RegionAndTicker.split(':')[1]} | <Text style={styles.ratingText}>QQQ</Text></Text>
             </View>
-            <View style={styles.ratingCell}>
-              <Text style={styles.ratingText}>QQQ</Text>
-            </View>
+
             <View style={styles.helpCell}>
                <Image style={styles.icon} source={require('./resources/icon-help-grey3.png')} />
             </View>
@@ -132,16 +142,95 @@ class SecurityView extends React.Component {
         <View style={{height:2, backgroundColor: '#000000'}} />
 
 
+        <View style={styles.quote}>
+            <View style={styles.priceFair}>
+                <Text style={styles.labelText}>Price vs. Fair Value <Text style={styles.dateText}>12 May 2016</Text></Text>
+                <Text style={styles.descText}>Undervalued at a 29% Discount with High uncertainty.</Text>
+            </View>
+            <View style={styles.iconCell}>
+               <Image style={styles.icon} source={require('./resources/icon-info-grey3.png')} />
+            </View>
+        </View>
 
-        <View style={styles.priceFair}>
-            <Text style={styles.labelText}>Price vs. Fair Value <Text style={styles.dateText}>12 May 2016</Text></Text>
-       </View>
+        <View style={styles.quote}>
+          <View style={styles.fair}>
+              <View style={styles.largeFair}>
+                <Image style={styles.fairImg} source={require('./resources/fair.png')} />
+             </View>
+             <View style={styles.spaceCell}></View>
+             <View style={styles.samllFair}>
+               <Image style={styles.fairIcon} source={require('./resources/capsule-legend-stars-43x52.png')} />
+            </View>
+          </View>
+        </View>
+
+        <View style={{height:2, backgroundColor: '#000000'}} />
+
+        <View style={styles.quote}>
+            <View style={styles.priceFair}>
+                <Text style={styles.labelText}>Andrew Lane</Text>
+                <Text style={styles.descText}>Equity Analyst</Text>
+            </View>
+
+        </View>
+
+        <View style={{height:1, backgroundColor: 'grey'}} />
+
+        <View style={styles.quote}>
+            <View style={styles.priceFair}>
+                <Text style={styles.labelText}>Valuation</Text>
+                <Text style={styles.descText}>We are lowering our fair value estimate to $145 per share from $174 on a suprisingly disappointing</Text>
+            </View>
+
+        </View>
+
+        <View style={styles.quote}>
+          <ScrollView showsVerticalScrollIndicator={true}
+              contentContainerStyle={styles.contentContainer}>
+
+              <Text
+                         style={{color:'#FFF',margin:5,fontSize:16,backgroundColor:"blue"}}>
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                             Shake or press menu button for dev menuShake or press menu button for dev menu
+                         </Text>
+          </ScrollView>
+        </View>
 
 
       </View>
     );
   }
 };
+
+
+
+
+//<Image style={styles.fairIcon} source={require('./resources/capsule-legend-stars-43x52.png')} />
 
 // <View style={styles.ratingCell}>
 //   <Text style={styles.ratingText}>
@@ -151,6 +240,10 @@ class SecurityView extends React.Component {
 module.exports = SecurityView;
 
 var styles = StyleSheet.create({
+  contentContainer: {
+     margin:10,
+     backgroundColor:"#ff0000",
+   },
   container: {
     marginLeft:5,
     marginRight:5,
@@ -169,7 +262,7 @@ var styles = StyleSheet.create({
   },
 
   ticketCell: {
-    width: 60,
+    width: 300,
     //backgroundColor:'#ff0000',
     height: 30
   },
@@ -227,7 +320,6 @@ var styles = StyleSheet.create({
     paddingLeft:5,
     width:20,
     alignItems:'flex-end',
-
     height: 30
   },
 
@@ -258,7 +350,38 @@ var styles = StyleSheet.create({
 
   priceFair: {
      flex:1,
-     backgroundColor:'#ffcccc'
+  },
+
+  descText: {
+     fontFamily: 'UniversNextforMORN-CnLt',
+     fontSize: 18,
+     textAlign: 'left'
+  },
+  fair: {
+     flex:1,
+     alignItems: 'center',
+     height:200,
+     flexDirection: 'row'
+     //backgroundColor:'#ffffff'
+  },
+  largeFair: {
+     flex: 0.6,
+     height: 100,
+     alignItems: 'center',
+
+  },
+  samllFair: {
+     flex: 0.4,
+     alignItems: 'center',
+
+  },
+  fairIcon: {
+    width: 43,
+    height: 52
+  },
+  fairImg: {
+    width: 119,
+    height: 132
   },
 
   icon: {
@@ -269,25 +392,7 @@ var styles = StyleSheet.create({
     width: 10,
     height: 10
   },
-  separator: {
-    height: 1,
-    backgroundColor: '#DDDDDD'
-  },
-  image: {
-    width: 400,
-    height: 300
-  },
-  price: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    margin: 5,
-    color: '#48BBEC'
-  },
-  title: {
-    fontSize: 20,
-    margin: 5,
-    color: '#656565'
-  },
+
   description: {
     fontSize: 18,
     margin: 5,
