@@ -34,6 +34,10 @@ var Api = {
   getSecurityQuote: function(query, callback) {
     var url = 'https://mobdev.morningstar.com/service_p2/1.0/products/MCS/securities/' + query + '/quote'
     return this.doRequest(url, callback);
+  },
+  getAnalystReport: function(query, callback) {
+    var url = 'https://mobdev.morningstar.com/service_p2/1.0/products/MCS/securities/' + query + '/stub_analyst_report'
+    return this.doRequest(url, callback);
   }
 };
 

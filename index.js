@@ -16,6 +16,7 @@ var _navigator;
 
 var SearchPage = require('./search.js');
 var SecurityView = require('./SecurityView.js');
+var AnalystReportView = require('./AnalystReportView.js');
 
 var MCSAndroid = React.createClass({
   getInitialState: function(){
@@ -23,7 +24,7 @@ var MCSAndroid = React.createClass({
   },
 
   configureScenceAndroid: function(){
-    return Navigator.SceneConfigs.FadeAndroid;
+    return Navigator.SceneConfigs.PushFromRight;
   },
 
   renderSceneAndroid: function(route, navigator){
@@ -58,6 +59,12 @@ var MCSAndroid = React.createClass({
            <SecurityView navigator={navigator} route={route}/>
          );
       }
+      if(route.id === 'report'){
+          return (
+            <AnalystReportView navigator={navigator} route={route}/>
+          );
+      }
+
   },
 
   render: function(){
