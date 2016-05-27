@@ -19,11 +19,11 @@ import {
 } from 'react-native'
 
 var Api = require('./App/Network/Api');
-
 var AnalystReportView = require('./AnalystReportView.js');
 var ValuationView = require('./ValuationView.js');
-var _navigator ;
+var ValuationCapsuleView = require('./ValuationCapsuleView.js');
 
+var _navigator ;
 
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -36,13 +36,6 @@ BackAndroid.addEventListener('hardwareBackPress', function() {
   return true;
 });
 
-// var imageUrls = [
-//   'https://img.alicdn.com/bao/uploaded/i3/TB1vkdZKFXXXXaAXVXXXXXXXXXX_!!0-item_pic.jpg',
-//   'https://img.alicdn.com/bao/uploaded/i5/TB1CGo3KXXXXXb6XpXXYXGcGpXX_M2.SS2',
-//   'https://img.alicdn.com/bao/uploaded/i1/TB1jkifKVXXXXXhXXXXXXXXXXXX_!!0-item_pic.jpg',
-//   'https://img.alicdn.com/bao/uploaded/i2/TB1GCgoKVXXXXcaXpXXXXXXXXXX_!!0-item_pic.jpg',
-//   'https://img.alicdn.com/bao/uploaded/i1/TB1D6A7KVXXXXaQXVXXXXXXXXXX_!!0-item_pic.jpg',
-// ]
 class SecurityView extends React.Component {
 
   constructor(props) {
@@ -53,8 +46,6 @@ class SecurityView extends React.Component {
       date:new Date(),
       securityData:[],
       quote:[],
-
-
       currentPage: 0
     };
 
@@ -76,8 +67,6 @@ class SecurityView extends React.Component {
     });
   }
 
-
-
   getQuote(query, option) {
     if(!query.trim()) {
       return;
@@ -95,7 +84,6 @@ class SecurityView extends React.Component {
    }
 
   render() {
-
     return (
       <View style={styles.container}>
 
@@ -167,17 +155,7 @@ class SecurityView extends React.Component {
                     </View>
                 </View>
 
-                <View style={styles.quote}>
-                  <View style={styles.fair}>
-                      <View style={styles.largeFair}>
-                        <Image style={styles.fairImg} source={require('./resources/fair.png')} />
-                     </View>
-                     <View style={styles.spaceCell}></View>
-                     <View style={styles.samllFair}>
-                       <Image style={styles.fairIcon} source={require('./resources/capsule-legend-stars-43x52.png')} />
-                    </View>
-                  </View>
-                </View>
+                <ValuationCapsuleView securityID="0P0000ZOQ0"/>
 
                 <View style={{height:2, backgroundColor: '#000000'}} />
 
