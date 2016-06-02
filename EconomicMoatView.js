@@ -23,7 +23,7 @@ class EconomicMoatView extends React.Component {
 
   render() {
     return (
-        <View>
+        <View style={styles.container}>
           <View >
              <Text>Chart1</Text>
           </View>
@@ -38,6 +38,17 @@ class EconomicMoatView extends React.Component {
               <Image style={styles.smallIcon} source={require('./resources/moat-none-27x27.png')} />
             </View>
          </View>
+         <View>
+         <Text>Year</Text>
+         </View>
+         <View>
+           <View style={styles.bar}>
+           </View>
+           <View style={styles.circle}></View>
+         </View>
+         <View>
+         <Text>99.22</Text>
+         </View>
        </View>
     )
   }
@@ -45,6 +56,11 @@ class EconomicMoatView extends React.Component {
 
 module.exports = EconomicMoatView;
 var styles = StyleSheet.create({
+  container: {
+      flexDirection: 'column',
+      //margin: 5,
+      //backgroundColor:'black',
+  },
   iconView: {
     flex:1,
     justifyContent: 'space-around',
@@ -59,5 +75,25 @@ var styles = StyleSheet.create({
   LagreIcon: {
     width: 50,
     height: 50,
-  }
+  },
+  circle: {
+    top:-7,
+
+    left:50,
+    height: 8,
+    width: 8,
+    backgroundColor:'black',
+    borderRadius: 5,
+  },
+  bar: {
+    flex:1,
+    alignSelf: 'center',
+    borderRadius: 12,
+    height: 5,
+    width:300,
+    justifyContent:"center",
+
+    marginRight: 5,
+    backgroundColor:'grey',
+  },
 });

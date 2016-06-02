@@ -134,6 +134,26 @@ class ValuationCapsuleChart extends React.Component {
   }
 }
 
+
+// <Svg height="240" width="50">
+//   <G clipPath="url(#capsuleclip2)">
+//   <Rect ref="segment" x="0" y="0" width="40" height="53.99999999999999" fill="#FFC8A6"/>
+//   <Rect ref="segment" x="0" y="53.99999999999999" width="40" height="48.00000000000002" fill="#FFDCC6"/>
+//   <Rect ref="segment" x="0" y="102.00000000000001" width="40" height="35.999999999999986" fill="#E6EFEE"/>
+//   <Rect ref="segment" x="0" y="138" width="40" height="30" fill="#C5E4F6"/>
+//   <Rect ref="segment" x="0" y="168" width="40" height="72" fill="#A5D7F1"/>
+//   </G>
+//   <Rect x="0.5" y="0.5" rx="19.5" width="39" height="239" stroke="#333" stroke-width="1" fill="none"/>
+//    <G>
+//      <Circle ref="lastCloseDot" cx="20" cy="113.26689655172413" r="6.5" stroke="none" fill="#000"/>
+//      <Circle ref="fvCircle" cx="20" cy="120.5" r="8" stroke="#EC1C24" stroke-width="1" fill="none"/>
+//    </G>
+//    <Defs>
+//      <ClipPath id="capsuleclip2">
+//        <Rect  x="0" y="0" rx="20" width="40" height="240"/>
+//      </ClipPath>
+//    </Defs>
+// </Svg>
 module.exports = ValuationCapsuleChart;
 
 var styles = StyleSheet.create({

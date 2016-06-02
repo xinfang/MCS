@@ -292,28 +292,8 @@ var styles = StyleSheet.create({
   ,
   descText: {
       fontFamily: 'UniversNextforMORN-CnLt', fontSize: 16, textAlign: 'left'
-  }
-  ,
-  fair: {
-      flex: 1, alignItems: 'center', height: 200, flexDirection: 'row' //backgroundColor:'#ffffff'
-  }
-  ,
-  largeFair: {
-      flex: 0.6, height: 100, alignItems: 'center',
-  }
-  ,
-  samllFair: {
-      flex: 0.4, alignItems: 'center',
-  }
-  ,
-  fairIcon: {
-      width: 43, height: 52
-  }
-  ,
-  fairImg: {
-      width: 119, height: 132
-  }
-  ,
+  },
+
   icon: {
       width: 20, height: 20
   }
