@@ -13,7 +13,10 @@ var {
   TouchableHighlight,
   Navigator,
   BackAndroid,
+  AsyncStorage,
 } = ReactNative;
+
+var STORAGE_KEY = '@AsyncStorageExample:key';
 var SimpleAlert = require('react-native-simpledialog-android');
 var Api = require('./App/Network/Api');
 
@@ -33,10 +36,30 @@ var _navigator ;
 module.exports = React.createClass({
   getInitialState: function() {
     _navigator = this.props.navigator;
-    return {
+   return {
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       loaded: false,
+      selectedValue: undefined,
+      messages: [],
     };
+  },
+
+  componentDidMount() {
+   this._loadInitialState().done();
+  },
+
+  async _loadInitialState() {
+    try {
+      var value = await AsyncStorage.getItem(STORAGE_KEY);
+      if (value !== null){
+        this.setState({selectedValue: value});
+        console.log('Recovered selection from disk: ' + value);
+      } else {
+        console.log('Initialized with no selection on disk.');
+      }
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
   },
   _onPress(event) {
       console.log(event);
@@ -57,8 +80,6 @@ module.exports = React.createClass({
             { type: SimpleAlert.NEUTRAL_BUTTON, text: 'Neutral', onPress: () => console.log('Cancel Pressed!'), style: 'cancel'},
           ]
         );
-
-        //Alert.alert("Error","Request failed! ");
         return;
       }
       that.setState({
@@ -68,23 +89,28 @@ module.exports = React.createClass({
     });
   },
 
+  _onValueChange:function(performanceId) {
+      try {
+        AsyncStorage.setItem(STORAGE_KEY, performanceId);
+        console.log('Saved selection to disk: ' + performanceId);
+
+      } catch (error) {
+        console.log('AsyncStorage error: ' + error.message);
+      }
+  },
+
   _onPressSetSecurity: function(rowData) {
+      this._onValueChange(rowData.PerformanceId);
      _navigator.push({title:'SecurityView',id:'detail',security:rowData});
   },
 
   _onPressAdd: function(rowData) {
     this._onPressSetSecurity(rowData);
-    // var msg = 'Would you like to set ' + rowData.Name + ' as your company stock?'
-    // Alert.alert(
-    //     'Confirm',
-    //     msg,
-    //     [
-    //       {text: 'Cancel', onPress: () => console.log('Cancel Pressed!'), style: 'cancel'},
-    //       {text: 'OK', onPress: () => this._onPressSetSecurity(rowData)},
-    //     ]
-    // )
-
   },
+
+  _appendMessage(message) {
+   this.setState({messages: this.state.messages.concat(message)});
+ },
 
   _renderRow: function(rowData) {
     return (

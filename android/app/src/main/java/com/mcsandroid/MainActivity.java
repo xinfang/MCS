@@ -1,12 +1,14 @@
 package com.mcsandroid;
 
 import com.facebook.react.ReactActivity;
+import com.horcrux.svg.RNSvgPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.burnweb.rnsimplealertdialog.RNSimpleAlertDialogPackage;
 import com.smixx.reactnativeicons.ReactNativeIcons;  // <--- import
 import java.util.Arrays; // <--- import this if you want to specify which fonts to load
 import com.smixx.reactnativeicons.IconFont; // <--- import this if you want to specify which fonts to load
+
 
 
 import java.util.Arrays;
@@ -40,6 +42,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RNSvgPackage(),
             new ReactNativeIcons(),
             new RNSimpleAlertDialogPackage()
         );

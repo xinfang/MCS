@@ -5,6 +5,7 @@ var ReactNative = require('react-native');
 
 var {
   AppRegistry,
+  AsyncStorage,
   StyleSheet,
   View,
   Text,
@@ -12,15 +13,34 @@ var {
   Navigator,
 } =  ReactNative;
 
+var STORAGE_KEY = '@AsyncStorageExample:key';
 var _navigator;
-
 var SearchPage = require('./search.js');
 var SecurityView = require('./SecurityView.js');
 var AnalystReportView = require('./AnalystReportView.js');
 
 var MCSAndroid = React.createClass({
+  componentDidMount() {
+   this._loadInitialState().done();
+  },
+
+  async _loadInitialState() {
+    try {
+      var value = await AsyncStorage.getItem(STORAGE_KEY);
+      if (value !== null){
+        this.setState({selectedValue: value});
+        console.log('Recovered selection from disk: ' + value);
+      } else {
+        console.log('Initialized with no selection on disk.');
+      }
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  },
   getInitialState: function(){
-    return {};
+    return {
+      selectedValue: undefined
+    };
   },
 
   configureScenceAndroid: function(){
@@ -35,6 +55,9 @@ var MCSAndroid = React.createClass({
              <View>
                <Text style={styles.header}>
                  My Company Stock
+               </Text>
+               <Text style={styles.header}>
+                 {this.state.selectedValue}
                </Text>
                <Text style={styles.company}>
                  Powered by Morningstar
