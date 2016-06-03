@@ -23,8 +23,8 @@ import {
 } from 'react-native-svg';
 
 var Api = require('./App/Network/Api');
-
-class ValuationCapsuleChart extends React.Component {
+var ValuationCapsuleChart = require('./ValuationCapsuleChart.js');
+class ValuationCapsuleView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -122,11 +122,7 @@ class ValuationCapsuleChart extends React.Component {
           </View>
         </View>
         <View style={styles.thirdChart}>
-            <Svg height="240" width="90" scale="0.5">
-            <G scale="0.5">
-            <Path fill="none" stroke="#000"  scaleX="1" scaleY="-1" y="59" x="0" strokeWidth="1" d="M0 0 H88.9375 Q92.9375 0 92.9375 4 V54  Q92.9375 58 88.9375 58 H11 Q7 58 7 54 V7 L0 0Z"></Path>
-            </G>
-            </Svg>
+            <Image style={styles.fairIcon} source={require('./resources/capsule-legend-stars-43x52.png')} />
         </View>
       </View>
 
@@ -134,7 +130,7 @@ class ValuationCapsuleChart extends React.Component {
   }
 }
 
-  //<Image style={styles.fairIcon} source={require('./resources/capsule-legend-stars-43x52.png')} />
+
 // <Svg height="240" width="50">
 //   <G clipPath="url(#capsuleclip2)">
 //   <Rect ref="segment" x="0" y="0" width="40" height="53.99999999999999" fill="#FFC8A6"/>
@@ -154,7 +150,7 @@ class ValuationCapsuleChart extends React.Component {
 //      </ClipPath>
 //    </Defs>
 // </Svg>
-module.exports = ValuationCapsuleChart;
+module.exports = ValuationCapsuleView;
 
 var styles = StyleSheet.create({
   container: {

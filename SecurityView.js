@@ -22,7 +22,7 @@ import {
 var Api = require('./App/Network/Api');
 var AnalystReportView = require('./AnalystReportView.js');
 var ValuationView = require('./ValuationView.js');
-var ValuationCapsuleChart = require('./ValuationCapsuleChart.js');
+var ValuationCapsuleView = require('./ValuationCapsuleView.js');
 var EconomicMoatView = require('./EconomicMoatView.js');
 var SecurityQuoteView = require('./SecurityQuoteView.js');
 
@@ -134,12 +134,12 @@ class SecurityView extends React.Component {
                    <ViewPagerAndroid
                    style={{flex: 1}}
                    initialPage={0}>
-                   <View style={styles.pageStyle}>
-                      <ValuationCapsuleChart securityID="0P0000ZOQ0"/>
-                   </View>
-                   <View style={styles.pageStyle}>
-                      <EconomicMoatView securityID="0P0000ZOQ0"/>
-                    </View>
+                     <View style={styles.pageStyle}>
+                        <ValuationCapsuleView securityID="0P0000ZOQ0"/>
+                     </View>
+                     <View style={styles.pageStyle}>
+                        <EconomicMoatView securityID="0P0000ZOQ0"/>
+                      </View>
                     </ViewPagerAndroid>
                 </View>
 
@@ -293,7 +293,6 @@ var styles = StyleSheet.create({
   descText: {
       fontFamily: 'UniversNextforMORN-CnLt', fontSize: 16, textAlign: 'left'
   },
-
   icon: {
       width: 20, height: 20
   }
