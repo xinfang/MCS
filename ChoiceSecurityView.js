@@ -103,6 +103,9 @@ var styles = StyleSheet.create({
 
     margin:5,
   },
+  // quote: {
+  //     flex: 1, width:300,paddingBottom: 5, paddingTop: 5, backgroundColor:'#ffffff'
+  // },
   titleText: {
     marginBottom:5,
     fontFamily: 'UniversNextforMORN-CnLt',
@@ -129,7 +132,7 @@ var styles = StyleSheet.create({
     textAlign: 'right',
   },
   buttoncontainer: {
-      paddingTop: 10, flex: 1, alignItems: 'center',flexDirection: 'row',justifyContent: 'space-around',
+      paddingTop: 10, flex: 1, width:300, alignItems: 'center',flexDirection: 'row',justifyContent: 'space-around',
   }
   ,
   button: {

@@ -1,7 +1,6 @@
 'use strict';
 
 import React, { Component } from 'react';
-import Modal from 'react-native-root-modal';
 
 import {
   View,
