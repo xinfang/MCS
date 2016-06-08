@@ -52,6 +52,8 @@ class SecurityView extends React.Component {
   constructor(props) {
     super(props);
     _navigator = props.navigator;
+    console.log("Xf1");
+    console.log(props.route);
     this.state = {
       security:props.route.security,
       date:new Date(),

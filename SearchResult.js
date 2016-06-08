@@ -19,6 +19,7 @@ var {
 var STORAGE_KEY = '@AsyncStorageExample:key';
 var SimpleAlert = require('react-native-simpledialog-android');
 var Api = require('./App/Network/Api');
+var ChoiceSecurityView = require('./ChoiceSecurityView.js');
 
 BackAndroid.addEventListener('hardwareBackPress', function() {
   if(_navigator == null){
@@ -101,7 +102,9 @@ module.exports = React.createClass({
 
   _onPressSetSecurity: function(rowData) {
       this._onValueChange(rowData.PerformanceId);
-     _navigator.push({title:'SecurityView',id:'detail',security:rowData});
+      ChoiceSecurityView
+       _navigator.push({title:'ChoiceSecurityView',id:'choice',security:rowData});
+      //_navigator.push({title:'SecurityView',id:'detail',security:rowData});
   },
 
   _onPressAdd: function(rowData) {

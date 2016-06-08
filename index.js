@@ -18,6 +18,8 @@ var _navigator;
 var SearchPage = require('./search.js');
 var SecurityView = require('./SecurityView.js');
 var AnalystReportView = require('./AnalystReportView.js');
+var ChoiceSecurityView = require('./ChoiceSecurityView.js');
+
 
 var MCSAndroid = React.createClass({
   componentDidMount() {
@@ -87,6 +89,12 @@ var MCSAndroid = React.createClass({
             <AnalystReportView navigator={navigator} route={route}/>
           );
       }
+      if(route.id === 'choice'){
+          return (
+            <ChoiceSecurityView navigator={navigator} route={route}/>
+          );
+      }
+
 
   },
 
