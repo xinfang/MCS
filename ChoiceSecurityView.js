@@ -1,6 +1,5 @@
 'use strict';
-// var React = require('react');
-// var ReactNative = require('react-native');
+
 import React, { Component } from 'react';
 import PageControlIOS from 'react-native-pagecontrol';
 import {
@@ -21,11 +20,6 @@ import {
 
 var Api = require('./App/Network/Api');
 var Button = require('react-native-button');
-
-var WEBVIEW_REF = 'webview';
-var DEFAULT_URL = 'https://m.facebook.com';
-var BGWASH = 'rgba(255,255,255,0.8)';
-
 
 var _navigator ;
 
@@ -109,7 +103,6 @@ var styles = StyleSheet.create({
 
     margin:5,
   },
-
   titleText: {
     marginBottom:5,
     fontFamily: 'UniversNextforMORN-CnLt',
